@@ -88,9 +88,11 @@ color:#666;
 
 <script>
 
+const db = "https://esp32-a511e-default-rtdb.asia-southeast1.firebasedatabase.app";
+
 function getData(){
 
-fetch("http://192.168.4.1/data")
+fetch(db + "/sensor.json")
 .then(res => res.json())
 .then(data => {
 
@@ -104,7 +106,8 @@ document.getElementById("power").innerHTML = data.power + " W";
 
 }
 
-setInterval(getData,2000)
+getData();
+setInterval(getData,2000);
 
 </script>
 

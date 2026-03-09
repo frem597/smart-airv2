@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESP32 Dashboard</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f4f7;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:500px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+margin-bottom:20px;
+}
+
+.temp{
+font-size:50px;
+color:#2F80ED;
+text-align:center;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.value{
+font-size:28px;
+font-weight:bold;
+}
+
+.label{
+color:#666;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h2>Temperature</h2>
+<div class="temp" id="temp">-- °C</div>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="label">Humidity</div>
+<div class="value" id="hum">-- %</div>
+</div>
+
+<div class="card">
+<div class="label">Voltage</div>
+<div class="value" id="volt">-- V</div>
+</div>
+
+<div class="card">
+<div class="label">Current</div>
+<div class="value" id="curr">-- A</div>
+</div>
+
+<div class="card">
+<div class="label">Power</div>
+<div class="value" id="power">-- W</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function getData(){
+
+fetch("http://192.168.4.1/data")
+.then(res => res.json())
+.then(data => {
+
+document.getElementById("temp").innerHTML = data.temp + " °C";
+document.getElementById("hum").innerHTML = data.hum + " %";
+document.getElementById("volt").innerHTML = data.voltage + " V";
+document.getElementById("curr").innerHTML = data.current + " A";
+document.getElementById("power").innerHTML = data.power + " W";
+
+});
+
+}
+
+setInterval(getData,2000)
+
+</script>
+
+</body>
+</html>
